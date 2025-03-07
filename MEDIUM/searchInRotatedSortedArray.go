@@ -1,4 +1,4 @@
-package main
+package medium
 
 func search(nums []int, target int) int {
 
@@ -34,12 +34,4 @@ func search(nums []int, target int) int {
 		return -1
 	}
 	return nums[mid]
-}
-
-func main() {
-	a := search([]int{
-		4, 5, 6, 7, 0, 1, 2,
-	}, 0)
-
-	println(a)
 }
