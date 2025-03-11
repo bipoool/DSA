@@ -1,4 +1,4 @@
-package HARD
+package hard
 
 import "math"
 
