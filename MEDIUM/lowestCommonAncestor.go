@@ -10,11 +10,11 @@ var commonNode *TreeNode = &TreeNode{
 }
 
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
-	helper(root, p, q)
+	helperlowestCommonAncestor(root, p, q)
 	return commonNode
 }
 
-func helper(root *TreeNode, node1 *TreeNode, node2 *TreeNode) bool {
+func helperlowestCommonAncestor(root *TreeNode, node1 *TreeNode, node2 *TreeNode) bool {
 
 	if root == nil {
 		return false
@@ -26,8 +26,8 @@ func helper(root *TreeNode, node1 *TreeNode, node2 *TreeNode) bool {
 		rootFlag = true
 	}
 
-	left := helper(root.Left, node1, node2)
-	right := helper(root.Right, node1, node2)
+	left := helperlowestCommonAncestor(root.Left, node1, node2)
+	right := helperlowestCommonAncestor(root.Right, node1, node2)
 
 	if rootFlag {
 		if right || left {
