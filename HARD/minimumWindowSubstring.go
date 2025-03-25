@@ -46,6 +46,3 @@ func minWindow(s string, t string) string {
 	}
 	return s[startIndex : startIndex+minLen+1]
 }
-func main() {
-	println(minWindow("ADOBECODEBANC", "ABC"))
-}
