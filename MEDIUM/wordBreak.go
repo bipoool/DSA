@@ -6,10 +6,10 @@ func wordBreak(s string, wordDict []string) bool {
 	for i := range wordDict {
 		dict[wordDict[i]] = 1
 	}
-	return helper(s, dict, dp)
+	return helperwordBreak(s, dict, dp)
 }
 
-func helper(s string, dict map[string]int, dp map[string]bool) bool {
+func helperwordBreak(s string, dict map[string]int, dp map[string]bool) bool {
 
 	if len(s) == 0 {
 		return true
@@ -25,7 +25,7 @@ func helper(s string, dict map[string]int, dp map[string]bool) bool {
 			if i-1 == 0 {
 				return true
 			}
-			if helper(s[i+1:], dict, dp) {
+			if helperwordBreak(s[i+1:], dict, dp) {
 				return true
 			}
 		}

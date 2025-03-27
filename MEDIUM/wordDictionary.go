@@ -5,7 +5,7 @@ type WordDictionary struct {
 	isWord  bool
 }
 
-func Constructor() WordDictionary {
+func ConstructorWordDictionary() WordDictionary {
 	return WordDictionary{
 		trieMap: map[byte]*WordDictionary{},
 		isWord:  false,
