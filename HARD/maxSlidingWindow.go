@@ -29,8 +29,8 @@ func maxSlidingWindow(nums []int, k int) []int {
 	return res
 }
 
-func main() {
-	maxSlidingWindow(
-		[]int{9, 10, 9, -7, -4, -8, 2, -6}, 5,
-	)
-}
+// func main() {
+// 	maxSlidingWindow(
+// 		[]int{9, 10, 9, -7, -4, -8, 2, -6}, 5,
+// 	)
+// }
