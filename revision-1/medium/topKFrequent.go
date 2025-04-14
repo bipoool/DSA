@@ -1,41 +1,36 @@
 package medium
 
 func topKFrequent(nums []int, k int) []int {
+
 	hmap := map[int]int{}
+	bucket := make([][]int, len(nums)+1)
 
 	for i := range nums {
-		hmap[nums[i]] += 1
+		hmap[nums[i]]++
 	}
-	revMap := map[int][]int{}
 
-	for i := range hmap {
-		if _, ok := revMap[hmap[i]]; !ok {
-			revMap[hmap[i]] = make([]int, 0)
+	for k, v := range hmap {
+		if val := bucket[v]; val == nil {
+			bucket[v] = []int{}
 		}
-		revMap[hmap[i]] = append(revMap[hmap[i]], i)
+		bucket[v] = append(bucket[v], k)
 	}
-	arr := make([][]int, len(nums)+1)
 
-	for i := range revMap {
-		arr[i] = revMap[i]
-	}
-	res := make([]int, 0)
-	for i := len(arr) - 1; i >= 0; i-- {
-		if arr[i] != nil {
-			elemetnts := arr[i]
-			lenArr := len(arr[i])
+	res := []int{}
 
-			if lenArr > k {
-				res = append(res, elemetnts[:k]...)
-			} else {
-				res = append(res, arr[i]...)
-			}
+	for i := len(bucket) - 1; i >= 0; i++ {
 
-			k -= lenArr
+		if bucket[i] == nil {
+			continue
 		}
-		if k <= 0 {
-			break
+
+		if len(bucket[i]) > k {
+			res = append(res, bucket[i][:k]...)
+		} else {
+			res = append(res, bucket[i]...)
 		}
+
 	}
 	return res
+
 }
