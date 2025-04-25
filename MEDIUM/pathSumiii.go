@@ -8,10 +8,10 @@ var h map[int]int
 func pathSum(root *TreeNode, t int) int {
 	h = map[int]int{}
 	h[0] = 1
-	return dfs(root, 0, t)
+	return dfspathSum(root, 0, t)
 }
 
-func dfs(root *TreeNode, cs int, t int) int {
+func dfspathSum(root *TreeNode, cs int, t int) int {
 	if root == nil {
 		return 0
 	}
@@ -22,8 +22,8 @@ func dfs(root *TreeNode, cs int, t int) int {
 		count += h[cs-t]
 	}
 	h[cs]++
-	count += dfs(root.Left, cs, t)
-	count += dfs(root.Right, cs, t)
+	count += dfspathSum(root.Left, cs, t)
+	count += dfspathSum(root.Right, cs, t)
 	h[cs]--
 
 	return count
