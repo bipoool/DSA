@@ -1,5 +1,7 @@
 package medium
 
+// Expand around each center
+// Count the number of palindroms
 func countSubstrings(s string) int {
 
 	result := 0
