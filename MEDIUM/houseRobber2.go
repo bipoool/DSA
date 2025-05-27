@@ -1,43 +1,36 @@
 package medium
 
-func rob(nums []int) int {
+// First solve it without considering the last element
+// Then solve it without considering the first element
 
-	if len(nums) == 1 {
-		return nums[0]
+// At each index you have 2 options
+// Either rob the 2nd house
+// Or rob what amount is possible if last house was not robbed
+func rob(n []int) int {
+
+	if len(n) == 1 {
+		return n[0]
+	}
+	if len(n) == 2 {
+		return max(n[0], n[1])
 	}
 
-	if len(nums) == 2 {
-		return max(nums[0], nums[1])
+	arr := make([]int, len(n))
+	arr[0] = n[0]
+	arr[1] = n[1]
+
+	for i := 2; i < len(n)-1; i++ {
+		arr[i] = max(arr[i-1]-n[i-1], arr[i-2]) + n[i]
 	}
 
-	forw := make([]int, len(nums))
-	back := make([]int, len(nums))
-
-	forw[0] = nums[0]
-	forw[1] = nums[1]
-
-	back[0] = nums[1]
-	back[1] = nums[2]
-
-	for i := 2; i < len(nums)-1; i++ {
-		if forw[i-2] < forw[i-1]-nums[i-1] {
-			forw[i] = forw[i-1] - nums[i-1] + nums[i]
-		} else {
-			forw[i] = forw[i-2] + nums[i]
-		}
+	res1 := max(arr[len(arr)-3], arr[len(arr)-2])
+	arr[2] = n[2]
+	arr[1] = n[1]
+	for i := 3; i < len(n); i++ {
+		arr[i] = max(arr[i-1]-n[i-1], arr[i-2]) + n[i]
 	}
 
-	nums = append(nums, nums[0])
-	nums = nums[1:]
-
-	for i := 2; i < len(nums); i++ {
-		if back[i-2] < back[i-1]-nums[i-1] {
-			back[i] = back[i-1] - nums[i-1] + nums[i]
-		} else {
-			back[i] = back[i-2] + nums[i]
-		}
-	}
-
-	return max(forw[len(forw)-1], forw[len(forw)-2], back[len(back)-1], back[len(back)-1])
+	res2 := max(arr[len(arr)-1], arr[len(arr)-2])
+	return max(res1, res2)
 
 }

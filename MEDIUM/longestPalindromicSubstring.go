@@ -2,39 +2,41 @@ package medium
 
 import "math"
 
+// Expand accross all the centers -> i & i+1
+// Find the length of the palindrom at each center
 func longestPalindrome(s string) string {
 
 	maxLen := math.MinInt
-	startId := 0
-	for i := range s {
-		odd, startOdd := expand(s, i, i)
-		even, startEven := expand(s, i, i+1)
+	st := 0
 
-		if odd > even && maxLen < odd {
-			maxLen = odd
-			startId = startOdd
-		} else if maxLen < even {
-			maxLen = even
-			startId = startEven
+	for i := 0; i < len(s); i++ {
+
+		l1, r1 := expand(s, i, i)
+		l2, r2 := expand(s, i, i+1)
+		if r1-l1+1 > maxLen {
+			maxLen = r1 - l1 + 1
+			st = l1
 		}
-	}
-	return s[startId : startId+maxLen]
-}
-
-func expand(s string, x int, y int) (int, int) {
-
-	for x >= 0 && y < len(s)-1 && s[x] == s[y] {
-		x--
-		y++
-	}
-
-	if x >= 0 && y < len(s)-1 && s[x] == s[y] {
+		if r2-l2+1 > maxLen {
+			maxLen = r2 - l2 + 1
+			st = l2
+		}
 
 	}
-	return y - x - 1, x + 1
+
+	return s[st : st+maxLen]
 
 }
 
-// func main() {
-// 	println(longestPalindrome("bb"))
-// }
+func expand(s string, l int, r int) (int, int) {
+	for l >= 0 && r < len(s) {
+		if s[l] != s[r] {
+			break
+		}
+		l--
+		r++
+	}
+	l++
+	r--
+	return l, r
+}

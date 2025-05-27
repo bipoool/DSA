@@ -2,6 +2,14 @@ package medium
 
 import "sort"
 
+// Sort the array
+// As we have to make the sum to be zero
+// Traverse array and make target = -1*nums[i]
+// Now initialise l and r
+// If nums[l] + nums[r] == target -> append the result and traverse all the duplicates
+// Else if nums[l] + nums[r] > target -> r--
+// else l++
+// Remove all the duplicates
 func threeSum(nums []int) [][]int {
 	sort.SliceStable(nums, func(i, j int) bool {
 		return nums[i] < nums[j]

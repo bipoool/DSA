@@ -1,25 +1,17 @@
 package medium
 
+// At each index you have 2 options
+// Either rob the 2nd house
+// Or rob what amount is possible if last house was not robbed
 func rob1(nums []int) int {
 	if len(nums) == 1 {
 		return nums[0]
 	}
-	arr := make([]int, len(nums))
-	arr[0] = nums[0]
-	arr[1] = nums[1]
-
-	for i := range nums {
-		if i-2 < 0 {
-			continue
-		}
-		if arr[i-2] < arr[i-1]-nums[i-1] {
-			arr[i] = nums[i] + arr[i-1] - nums[i-1]
-		} else {
-			arr[i] = nums[i] + arr[i-2]
-		}
+	prev := nums[1]
+	for i := 2; i < len(nums); i++ {
+		temp := max(nums[i-2], nums[i-1]-prev) + nums[i]
+		prev = nums[i]
+		nums[i] = temp
 	}
-	if arr[len(nums)-1] > arr[len(nums)-2] {
-		return arr[len(nums)-1]
-	}
-	return arr[len(nums)-2]
+	return max(nums[len(nums)-1], nums[len(nums)-2])
 }
