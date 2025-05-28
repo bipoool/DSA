@@ -1,35 +1,22 @@
 package medium
 
+// Loop int string
+// Check if we would have started from the current index, is there any word in dict that would have matched (loop in the dict for this)
+// If it matches with on of the word, check if word after the current word also matches or not -> dp[i] = dp[i+len(w)]
 func wordBreak(s string, wordDict []string) bool {
-	dict := map[string]int{}
-	dp := map[string]bool{}
-	for i := range wordDict {
-		dict[wordDict[i]] = 1
-	}
-	return helperwordBreak(s, dict, dp)
-}
 
-func helperwordBreak(s string, dict map[string]int, dp map[string]bool) bool {
+	dp := make([]int, len(s)+1)
+	dp[len(s)] = 1
 
-	if len(s) == 0 {
-		return true
-	}
-	if _, ok := dp[s]; ok {
-		return dp[s]
-	}
-	word := ""
 	for i := len(s) - 1; i >= 0; i-- {
-		word = string(s[i:])
-		if _, ok := dict[word]; ok {
-			dp[word] = true
-			if i-1 == 0 {
-				return true
+		for _, w := range wordDict {
+			if i+len(w) <= len(s) && s[i:i+len(w)] == w {
+				dp[i] = dp[i+len(w)]
 			}
-			if helperwordBreak(s[i+1:], dict, dp) {
-				return true
+			if dp[i] == 1 {
+				break
 			}
 		}
 	}
-	return false
-
+	return dp[0] == 1
 }

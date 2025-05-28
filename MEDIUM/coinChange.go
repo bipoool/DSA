@@ -2,20 +2,29 @@ package medium
 
 import "math"
 
-func coinChange(coins []int, amount int) int {
-	dp := make([]int, amount+1)
-	for i := range dp {
-		dp[i] = math.MaxInt
+// Create an array of length amount + 1 for memoization
+// Loop in the amount and check how many coins would be required to make the current amount if we consider the current coin
+// you can do this by checking mem[curAmount-coins[i]]
+// mem[curAmount] = min(mem[curAmount] & mem[curAmount-coins[i]])
+func coinChange(c []int, a int) int {
+
+	ar := make([]int, a+1)
+	for i := range ar {
+		ar[i] = math.MaxInt
 	}
-	dp[0] = 0
-	for i := 1; i < amount; i++ {
-		for j := range coins {
-			if i-coins[j] >= 0 {
-				dp[i] = min(dp[i], 1+dp[i-coins[j]])
+	ar[0] = 0
+	for j := 1; j <= a; j++ {
+		for i := range c {
+			if j-c[i] >= 0 && ar[j-c[i]] != math.MaxInt {
+				ar[j] = min(ar[j], 1+ar[j-c[i]])
 			}
 		}
 	}
-	return dp[amount]
+
+	if ar[a] == math.MaxInt {
+		return -1
+	}
+	return ar[a]
 }
 
 // DFS solution top down

@@ -2,6 +2,9 @@ package medium
 
 import "math"
 
+// Just calculate the prod from start and then from end
+// Compare maxProd at each step
+// If currProd == 0 -> currProd=1
 func maxProduct(nums []int) int {
 	mxProd := math.MinInt
 

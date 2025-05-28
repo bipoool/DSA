@@ -22,6 +22,10 @@ func lengthOfLISDp(nums []int) int {
 
 }
 
+// Creat an empty array
+// Loop into nums and try to find out the position at which you should insert the current element
+// Find the nearest smallest element to the current element
+// And Insert/update it to the next index
 func lengthOfLIS(nums []int) int {
 
 	mem := make([]int, 0)
