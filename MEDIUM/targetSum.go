@@ -1,41 +1,31 @@
 package medium
 
-var dp [][]int
+// Every time you have 2 option -> Add or subtract
+// Create a recusive function to do so
+// Then cache the output for every (i, currSum) because these are the only 2 variable
+var dp []map[int]int
 
 func findTargetSumWays(nums []int, target int) int {
-
-	dp = make([][]int, len(nums))
+	dp = make([]map[int]int, len(nums))
 	for i := range dp {
-		dp[i] = make([]int, 2)
-		dp[i][0] = -1
-		dp[i][1] = -1
+		dp[i] = map[int]int{}
 	}
-	a := dfsFindTargetSumWays(nums, target, 0, 0, 0) + dfsFindTargetSumWays(nums, target, 0, 0, 1)
-	return a
+	return dfsfindTargetSumWays(nums, 0, 0, target)
 }
 
-func dfsFindTargetSumWays(nums []int, target int, currSum int, currI int, op int) int {
-
-	if target == currSum && currI == len(nums) {
+func dfsfindTargetSumWays(nums []int, id int, currSum int, target int) int {
+	if currSum == target && id == len(nums) {
 		return 1
 	}
 
-	if currI >= len(nums) {
+	if id == len(nums) {
 		return 0
 	}
 
-	if dp[currI][op] != -1 {
-		return dp[currI][op]
+	if dp[id][currSum] != 0 {
+		return dp[id][currSum]
 	}
 
-	if op == 0 {
-		currSum = currSum + nums[currI]
-	} else {
-		currSum = currSum - nums[currI]
-	}
-
-	dp[currI][op] = dfsFindTargetSumWays(nums, target, currSum, currI+1, 0) + dfsFindTargetSumWays(nums, target, currSum, currI+1, 1)
-
-	return dp[currI][op]
-
+	dp[id][currSum] = dfsfindTargetSumWays(nums, id+1, currSum+nums[id], target) + dfsfindTargetSumWays(nums, id+1, currSum-nums[id], target)
+	return dp[id][currSum]
 }

@@ -1,5 +1,8 @@
 package hard
 
+// Create 2D dp array
+// Loop in both the strings
+// If s[i] == t[j]
 func numDistinct(s string, t string) int {
 
 	dp := make([][]int, len(s)+1)

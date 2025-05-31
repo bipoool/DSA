@@ -2,6 +2,12 @@ package medium
 
 var dpint [][]int
 
+// Every time you have 2 options
+// Add char from s1 or s2
+// Make a recusive function for this
+// Cache the output for every (i1, i2) as these are the only variables
+// Make sure you run the recursive function only if sx[ix] == target[s1i+s2i]
+// Otherwise you will have false negetives
 func isInterleave(s1 string, s2 string, s3 string) bool {
 	if len(s1)+len(s2) != len(s3) {
 		return false

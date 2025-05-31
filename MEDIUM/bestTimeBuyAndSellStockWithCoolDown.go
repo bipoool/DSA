@@ -4,6 +4,12 @@ import "math"
 
 var dpProfit [][]int
 
+// Use DFS
+// Start at index 0
+// At every step you have 3 options -> buy, sell, wait
+// If you sell, wait for next day -> i+2
+// pass on flag if you are buying or selling, take decision based on that
+// As there are so many combinations just store (id, flag) combination in DP
 func maxProfit(prices []int) int {
 
 	dpProfit = make([][]int, len(prices))
