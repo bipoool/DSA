@@ -1,32 +1,23 @@
 package easy
 
-import "math"
-
+// Change buy price daily if currprice is less than old buy price
+// Sell daily and save the maximum of mxProfit and old profit
 func maxProfit(prices []int) int {
+	mx := 0
+	b := prices[0]
 
-	l := 0
-	r := 0
-
-	mxProfit := math.MinInt
-	for r < len(prices) {
-
-		profit := prices[r] - prices[l]
-		if mxProfit < profit {
-			mxProfit = profit
+	for i := 1; i < len(prices); i++ {
+		p := prices[i]
+		curPr := p - b
+		mx = max(mx, curPr)
+		if b > p {
+			b = p
 		}
-
-		if prices[l] > prices[r] {
-			l = r
-			r++
-		} else {
-			r++
-		}
-
 	}
 
-	return mxProfit
-}
+	return mx
 
+}
 func main() {
 	println(maxProfit(
 		[]int{
