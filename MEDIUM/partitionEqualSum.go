@@ -1,29 +1,34 @@
 package medium
 
-// Find all the possible sums that u can make from the array using a SET
-// Then check if it is possible to make sum/2
-func canPartition(nums []int) bool {
+// Each dp1[i][j] represents the if j can be made either using i or not using i
+var dp1 [][]bool
 
+func canPartition(nums []int) bool {
 	sm := 0
-	for _, n := range nums {
-		sm += n
+	dp1 = make([][]bool, len(nums))
+	for i := range nums {
+		sm += nums[i]
 	}
 	if sm%2 != 0 {
 		return false
 	}
+	sm /= 2
 
-	set := map[int]int{}
-	set[0] = 1
-
-	for _, n := range nums {
-		newSet := map[int]int{}
-		for k := range set {
-			newSet[k+n] = 1
-			newSet[k] = 1
-		}
-		set = newSet
+	for i := range dp {
+		dp1[i] = make([]bool, sm+1)
+		dp1[i][0] = true
 	}
 
-	return set[sm/2] == 1
+	for id := len(nums) - 2; id >= 0; id-- {
+		for t := 1; t <= sm; t++ {
+			notTake := dp1[id+1][t]
+			take := false
+			if nums[id] <= t {
+				take = dp1[id+1][t-nums[id]]
+			}
+			dp1[id][t] = take || notTake
+		}
+	}
 
+	return dp1[0][sm]
 }
